@@ -1,0 +1,86 @@
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    z-index: 100;
+    position: fixed;
+    height: 45px;
+}
+
+.header a {
+    font-size: 18px;
+    display: block;
+    margin: 12px;
+    color: hsl(219, 100%, 65%);
+}
+
+.header a:hover {
+    color: hsl(219, 100%, 75%);
+}
+
+.content {
+    flex: 1;
+}
+
+.achievementsP1,
+.achievementsP2 {
+    flex: 1;
+    padding: 8px;
+}
+
+.achievementsP1 h1,
+.achievementsP2 h1,
+#globalAchievements h1 {
+    text-align: center;
+}
+
+.achieveTxt {
+    width: 100%;
+}
+
+#globalAchievements {
+    width: 926px;
+    margin: auto;
+    padding-top: 45px;
+}
+
+.floatTop,
+.floatBottom {
+    position: fixed;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	right: 40px;
+	height: 40px;
+	width: 40px;
+	font-size: 26px;
+    z-index: 50;
+}
+
+#top {
+    padding-top: 45px;
+}
+
+.floatTop{
+    top: 60px;
+}
+
+.floatBottom {
+    top: 120px;
+}
+
+@media screen and (max-width: 926px) {
+    #globalAchievements {
+        width: auto;
+    }
+}

@@ -1,0 +1,18 @@
+﻿@using SSUAchievementComparer.Core
+@model PlayerDetails
+
+
+<div class="col-sm">
+    <h3 class="text-center">@Model.PlayerName</h3>
+    @if (Model.IsProfilePrivate)
+    {
+        <div>@Html.Raw(Model.PrivateProfileText)</div>
+    }
+    else
+    {
+        foreach (var achievement in Model.Achievement.Select(a => a.HtmlDiv))
+        {
+            <div>@Html.Raw(achievement)</div>
+        }
+    }
+</div>
