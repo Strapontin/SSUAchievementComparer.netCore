@@ -4,13 +4,42 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="SearchDetails.GameId">Game Id</label>
+        @*<input asp-for="SearchDetails.GameId" class="form-control" autocomplete="on" />
+            <span class="text-danger" asp-validation-for="SearchDetails.GameId"></span>*@
 
+        <input asp-for="SearchDetails.GameId" class="form-control" type="text" list="games" />
+        <datalist id="games">
+            @foreach (var game in Model.GamesList)
+            {
+                <option value="@game.appid">@game.name</option>
+            }
+        </datalist>
+        <span class="text-danger" asp-validation-for="SearchDetails.GameId"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SearchDetails.IdPlayer1">Id Player 1</label>
+        <input asp-for="SearchDetails.IdPlayer1" class="form-control" />
+        <span class="text-danger" asp-validation-for="SearchDetails.IdPlayer1"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SearchDetails.IdPlayer2">Id Player 2</label>
+        <input asp-for="SearchDetails.IdPlayer2" class="form-control" />
+        <span class="text-danger" asp-validation-for="SearchDetails.IdPlayer2"></span>
+    </div>
 
-<a asp-page="./Achievements/AchievementComparison"
+    <button type="submit" class="btn btn-info">Search</button>
+</form>
+
+<br />
+<br />
+<br />
+
+<span>Don't know how to get the steam id of a user ? Use <a href="https://www.steamidfinder.com/">steamidfinder.com</a> to get it.</span>
+
+@*<a asp-page="./Achievements/AchievementComparison"
    asp-route-gameId="976730"
    asp-route-player1="76561198086634382"
-   asp-route-player2="76561198193278659">Goto AchievementComparison</a>
+   asp-route-player2="76561198193278659">Goto AchievementComparison</a>*@

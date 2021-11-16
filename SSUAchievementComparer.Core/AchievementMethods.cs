@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SSUAchievementComparer.Core.Entities;
+using SSUAchievementComparer.Core.Shared;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,18 +11,6 @@ namespace SSUAchievementComparer.Core
 {
     public static class AchievementMethods
     {
-        private static string GetPageContent(string link)
-        {
-            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(link);
-            HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-            {
-                string content = sr.ReadToEnd();
-                return content;
-            }
-        }
-
         /// <summary>
         /// Gets the webpage as Html object
         /// </summary>
@@ -60,19 +50,25 @@ namespace SSUAchievementComparer.Core
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        public static List<Achievement> GetGameAchievements(string link, string gameName)
+        public static GameDetails GetGameAchievements(string link, string gameName)
         {
-            var content = GetPageContent(link);
+            var content = HtmlCommon.GetPageContent(link);
             var achievementNodecollection = GetNodes(content, "//div[contains(@class, 'achieveRow')]");
 
-            List<Achievement> result = new List<Achievement>();
+            GameDetails gameDetails = new GameDetails();
+
+            if (achievementNodecollection == null)
+            {
+                gameDetails.GameExists = false;
+                return gameDetails;
+            }
 
             foreach (var achievementNode in achievementNodecollection)
             {
-                result.Add(SetTitleNode(achievementNode, gameName));
+                gameDetails.Achievements.Add(SetTitleNode(achievementNode, gameName));
             }
 
-            return result;
+            return gameDetails;
         }
 
         /// <summary>
@@ -84,7 +80,7 @@ namespace SSUAchievementComparer.Core
         {
             PlayerDetails playerDetails = new PlayerDetails();
 
-            var content = GetPageContent(link);
+            var content = HtmlCommon.GetPageContent(link);
             var achievementNodecollection = GetNodes(content, "//*[@class='achieveRow']");
             var playerNameNode = GetNodes(content, "//*[@class='whiteLink persona_name_text_content']");
 
@@ -93,7 +89,6 @@ namespace SSUAchievementComparer.Core
             {
                 playerDetails.PlayerName = GetNodes(content, "//*[@class='actual_persona_name']").First().InnerText.Trim();
                 playerDetails.IsProfilePrivate = true;
-                playerDetails.PrivateProfileText = GetNodes(content, "//*[@class='profile_private_info']").First().InnerText.Trim();
                 return playerDetails;
             }
 
@@ -104,7 +99,7 @@ namespace SSUAchievementComparer.Core
             {
                 if (achievementNode.InnerHtml.Contains("achieveUnlockTime"))
                 {
-                    playerDetails.Achievement.Add(SetTitleNode(achievementNode, gameName));
+                    playerDetails.Achievements.Add(SetTitleNode(achievementNode, gameName));
                 }
             }
 

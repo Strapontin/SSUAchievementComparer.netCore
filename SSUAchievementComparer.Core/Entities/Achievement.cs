@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SSUAchievementComparer.Core
+namespace SSUAchievementComparer.Core.Entities
 {
     public class Achievement
     {

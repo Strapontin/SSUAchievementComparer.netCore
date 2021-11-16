@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SSUAchievementComparer.Core;
+using SSUAchievementComparer.Core.Entities;
+using SSUAchievementComparer.Core.Entities.DB;
+using SSUAchievementComparer.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,16 +17,33 @@ namespace SSUAchievementComparer.Pages
         //private readonly string player_strapontin = "76561198086634382";
         //private readonly string player_sevenup = "76561198193278659";
 
-        private readonly ILogger<IndexModel> _logger;
+        [BindProperty]
+        public SearchDetails SearchDetails { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        private readonly IGameDetailsData gameDetailsData;
+        public List<GameDetailsDb> GamesList;
+
+        public IndexModel(IGameDetailsData gameDetailsData)
         {
-            _logger = logger;
+            SearchDetails = new SearchDetails();
+            this.gameDetailsData = gameDetailsData;
+
+            if (this.gameDetailsData.GetCountOfGames() == 0)
+            {
+                gameDetailsData.FetchAllGames();
+            }
+
+            GamesList = gameDetailsData.GetGamesByName(null).ToList();
         }
 
-        public void OnGet()
+        public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
+            return RedirectToPage("./Achievements/AchievementComparison", new { gameId = SearchDetails.GameId, idPlayer1 = SearchDetails.IdPlayer1, idPlayer2 = SearchDetails.IdPlayer2 });
         }
     }
 }
