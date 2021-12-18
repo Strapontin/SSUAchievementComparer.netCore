@@ -22,8 +22,9 @@ namespace SSUAchievementComparer.Pages
 
         private readonly IGameDetailsData gameDetailsData;
         public List<GameDetailsDb> GamesList;
+        public List<PlayerDetailsDb> PlayersList;
 
-        public IndexModel(IGameDetailsData gameDetailsData)
+        public IndexModel(IGameDetailsData gameDetailsData, IPlayerDetailsData playerDetailsData)
         {
             SearchDetails = new SearchDetails();
             this.gameDetailsData = gameDetailsData;
@@ -34,6 +35,7 @@ namespace SSUAchievementComparer.Pages
             }
 
             GamesList = gameDetailsData.GetGamesByName(null).ToList();
+            PlayersList = playerDetailsData.GetPlayersByName(null).ToList();
         }
 
         public IActionResult OnPost()

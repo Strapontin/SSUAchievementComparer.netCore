@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SSUAchievementComparer.Data;
 
 namespace SSUAchievementComparer.Data.Migrations
 {
     [DbContext(typeof(SSUAchievementComparerDbContext))]
-    partial class SSUAchievementComparerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211218160131_addedplayerdetailstodatabase")]
+    partial class addedplayerdetailstodatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

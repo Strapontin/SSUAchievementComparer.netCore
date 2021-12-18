@@ -31,6 +31,7 @@ namespace SSUAchievementComparer
             });
 
             services.AddScoped<IGameDetailsData, SqlGameDetailsData>();
+            services.AddScoped<IPlayerDetailsData, SqlPlayerDetailsData>();
 
             services.AddRazorPages();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();

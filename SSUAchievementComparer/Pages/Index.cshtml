@@ -21,14 +21,21 @@
     </div>
     <div class="form-group">
         <label asp-for="SearchDetails.IdPlayer1">Id Player 1</label>
-        <input asp-for="SearchDetails.IdPlayer1" class="form-control" />
+        <input asp-for="SearchDetails.IdPlayer1" class="form-control" type="text" list="players" />
         <span class="text-danger" asp-validation-for="SearchDetails.IdPlayer1"></span>
     </div>
     <div class="form-group">
         <label asp-for="SearchDetails.IdPlayer2">Id Player 2</label>
-        <input asp-for="SearchDetails.IdPlayer2" class="form-control" />
+        <input asp-for="SearchDetails.IdPlayer2" class="form-control" type="text" list="players" />
         <span class="text-danger" asp-validation-for="SearchDetails.IdPlayer2"></span>
     </div>
+
+    <datalist id="players">
+        @foreach (var player in Model.PlayersList)
+        {
+            <option value="@player.playerId">@player.name</option>
+        }
+    </datalist>
 
     <button type="submit" class="btn btn-info">Search</button>
 </form>

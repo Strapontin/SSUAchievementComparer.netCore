@@ -15,5 +15,6 @@ namespace SSUAchievementComparer.Data
         }
 
         public DbSet<GameDetailsDb> GameDetailsDb { get; set; }
+        public DbSet<PlayerDetailsDb> PlayerDetailsDb { get; set; }
     }
 }

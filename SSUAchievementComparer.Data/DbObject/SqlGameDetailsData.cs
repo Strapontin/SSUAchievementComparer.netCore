@@ -46,7 +46,9 @@ namespace SSUAchievementComparer.Data
             db.GameDetailsDb.RemoveRange(GetGamesByName(null));
             Commit();
 
-            var link = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
+            //var link = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
+
+            // CHANGER POUR https://api.steampowered.com/IStoreService/GetAppList/v1/?key=67A8BA5F6A8E24721002FFA67FEFFFA5&if_modified_since=01%2F01%2F2015&max_results=50000
 
             string content = HtmlCommon.GetPageContent(link);
 
