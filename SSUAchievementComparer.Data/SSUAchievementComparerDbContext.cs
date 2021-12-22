@@ -16,5 +16,13 @@ namespace SSUAchievementComparer.Data
 
         public DbSet<GameDetailsDb> GameDetailsDb { get; set; }
         public DbSet<PlayerDetailsDb> PlayerDetailsDb { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GameDetailsDb>()
+                .HasIndex(p => p.name)
+                .IncludeProperties("appid");
+        }
     }
 }

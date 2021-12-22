@@ -28,8 +28,8 @@ namespace SSUAchievementComparer.Pages.Achievements
         {
             // Fetches achievements of the game and players
             string link = $"https://steamcommunity.com/stats/{gameId}/achievements/";
-            string link1 = $"https://steamcommunity.com/profiles/{idPlayer1}/stats/{gameId}/achievements?&l=en";
-            string link2 = $"https://steamcommunity.com/profiles/{idPlayer2}/stats/{gameId}/achievements?&l=en";
+            string link1 = $"https://steamcommunity.com/profiles/{idPlayer1}/stats/{gameId}?tab=achievements";
+            string link2 = $"https://steamcommunity.com/profiles/{idPlayer2}/stats/{gameId}?tab=achievements";
 
             Thread threadGame, threadPlayer1, threadPlayer2;
 

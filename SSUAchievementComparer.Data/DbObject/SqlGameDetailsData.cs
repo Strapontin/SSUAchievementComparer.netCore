@@ -47,13 +47,12 @@ namespace SSUAchievementComparer.Data
             Commit();
 
             //var link = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
-
-            // CHANGER POUR https://api.steampowered.com/IStoreService/GetAppList/v1/?key=67A8BA5F6A8E24721002FFA67FEFFFA5&if_modified_since=01%2F01%2F2015&max_results=50000
+            var link = "https://api.steampowered.com/IStoreService/GetAppList/v1/?key=67A8BA5F6A8E24721002FFA67FEFFFA5&if_modified_since=01%2F01%2F2015&max_results=50000/";
 
             string content = HtmlCommon.GetPageContent(link);
 
             JObject obj = JObject.Parse(content);
-            var res = obj["applist"]["apps"].ToList();
+            var res = obj["response"]["apps"].ToList();
 
             // Gets all the elements from the link
             List<GameDetailsDb> games = new List<GameDetailsDb>();
@@ -61,11 +60,15 @@ namespace SSUAchievementComparer.Data
             {
                 GameDetailsDb newGame = result.ToObject<GameDetailsDb>();
                 newGame.name = newGame.name.Trim();
-                games.Add(newGame);
+
+                if (!string.IsNullOrEmpty(newGame.name))
+                {
+                    games.Add(newGame);
+                }
             }
 
             // Delete dupplicates before adding them to the database
-            games = games.GroupBy(g => g.appid).Select(g => g.First()).ToList();
+            games = games.GroupBy(g => g.appid).Select(g => g.First()).OrderBy(g => g.name).ToList();
 
             foreach (var game in games)
             {
@@ -87,12 +90,22 @@ namespace SSUAchievementComparer.Data
 
         public IEnumerable<GameDetailsDb> GetGamesByName(string name)
         {
-            var query = from g in db.GameDetailsDb
-                        where g.name.StartsWith(name) || string.IsNullOrEmpty(name)
-                        orderby g.name
-                        select g;
+            var query = db.GameDetailsDb.AsEnumerable();
 
-            return query;
+            if (!string.IsNullOrEmpty(name))
+            {
+                name = name.ToLowerInvariant();
+                query = query.Where(g => g.name.ToLowerInvariant().StartsWith(name));
+            }
+
+            var result = query.OrderBy(g => g.name)
+                .Select(g => new GameDetailsDb
+                {
+                    appid = g.appid,
+                    name = g.name
+                });
+
+            return result;
         }
 
         public GameDetailsDb Update(GameDetailsDb updatedGame)
