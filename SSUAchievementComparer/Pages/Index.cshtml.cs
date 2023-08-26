@@ -35,7 +35,7 @@ namespace SSUAchievementComparer.Pages
             }
 
             GamesList = gameDetailsData.GetGamesByName(null).ToList();
-            PlayersList = playerDetailsData.GetPlayersByName(null).ToList();
+            //PlayersList = playerDetailsData.GetPlayersByName(null).ToList();
         }
 
         public IActionResult OnPost()

@@ -29,13 +29,13 @@
         <input asp-for="SearchDetails.IdPlayer2" class="form-control" type="text" list="players" />
         <span class="text-danger" asp-validation-for="SearchDetails.IdPlayer2"></span>
     </div>
-
+@*
     <datalist id="players">
         @foreach (var player in Model.PlayersList)
         {
             <option value="@player.playerId">@player.name</option>
         }
-    </datalist>
+    </datalist>*@
 
     <button type="submit" class="btn btn-info">Search</button>
 </form>

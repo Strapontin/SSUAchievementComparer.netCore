@@ -35,7 +35,7 @@ namespace SSUAchievementComparer.Pages.Achievements
 
             threadGame = new Thread(() =>
             {
-                GameDetails = AchievementMethods.GetGameAchievements(link, "Halo");
+                GameDetails = AchievementMethods.GetGameAchievements(link);
             });
             threadPlayer1 = new Thread(() =>
             {
@@ -54,7 +54,7 @@ namespace SSUAchievementComparer.Pages.Achievements
             threadPlayer1.Join();
             threadPlayer2.Join();
 
-            SavePlayers(idPlayer1, idPlayer2);
+            //SavePlayers(idPlayer1, idPlayer2);
 
             var achievementTampon = new List<Achievement>(PlayerDetails1.Achievements);
 
@@ -87,15 +87,15 @@ namespace SSUAchievementComparer.Pages.Achievements
         private void SavePlayers(long playerId1, long playerId2)
         {
             // Only adds the player in the DB if the profile isn't private and the player doesn't exist already 
-            if (!PlayerDetails1.IsProfilePrivate && playerDetailsData.GetPlayerByPlayerId(playerId1) == null)
-            {
-                playerDetailsData.Add(new Core.Entities.DB.PlayerDetailsDb(playerId1, PlayerDetails1.PlayerName));
-            }
+            //if (!PlayerDetails1.IsProfilePrivate && playerDetailsData.GetPlayerByPlayerId(playerId1) == null)
+            //{
+            //    playerDetailsData.Add(new Core.Entities.DB.PlayerDetailsDb(playerId1, PlayerDetails1.PlayerName));
+            //}
 
-            if (!PlayerDetails2.IsProfilePrivate && playerDetailsData.GetPlayerByPlayerId(playerId2) == null)
-            {
-                playerDetailsData.Add(new Core.Entities.DB.PlayerDetailsDb(playerId2, PlayerDetails2.PlayerName));
-            }
+            //if (!PlayerDetails2.IsProfilePrivate && playerDetailsData.GetPlayerByPlayerId(playerId2) == null)
+            //{
+            //    playerDetailsData.Add(new Core.Entities.DB.PlayerDetailsDb(playerId2, PlayerDetails2.PlayerName));
+            //}
         }
     }
 }

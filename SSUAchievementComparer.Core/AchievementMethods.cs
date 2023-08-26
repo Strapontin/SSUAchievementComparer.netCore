@@ -50,10 +50,13 @@ namespace SSUAchievementComparer.Core
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        public static GameDetails GetGameAchievements(string link, string gameName)
+        public static GameDetails GetGameAchievements(string link)
         {
             var content = HtmlCommon.GetPageContent(link);
             var achievementNodecollection = GetNodes(content, "//div[contains(@class, 'achieveRow')]");
+            var gameName = GetNodes(content, "//title").FirstOrDefault().InnerHtml
+                .Replace("Steam Community :: ", "")
+                .Replace(" :: Achievements", "");
 
             GameDetails gameDetails = new GameDetails();
 
